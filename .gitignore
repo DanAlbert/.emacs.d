@@ -1,3 +1,13 @@
+# don't push downloaded packages; they'll be fetched on load
+elpa/
+
+# don't sync eshell history
+eshell/history
+eshell/lastdir
+
+# don't sync URL cookies
+url/cookies
+
 *~
 \#*\#
 /.emacs.desktop
