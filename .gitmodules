@@ -1,0 +1,3 @@
+[submodule "site-lisp/p4.el"]
+	path = site-lisp/p4.el
+	url = https://github.com/gareth-rees/p4.el.git

@@ -3,13 +3,13 @@
 ; a list of modes which should not be considered as "code"
 ; used to prevent enabling of 80 column marker, line numbering, etc in modes
 (setq not-code-modes-list '(eshell-mode
-							shell-mode
-							erc-mode
-							jabber-roster-mode
-							jabber-chat-mode
-							gnus-group-mode
-							gnus-summary-mode
-							gnus-article-mode))
+			    shell-mode
+			    erc-mode
+			    jabber-roster-mode
+			    jabber-chat-mode
+			    gnus-group-mode
+			    gnus-summary-mode
+			    gnus-article-mode))
 
 ; global key bindings
 (global-set-key "\C-w" 'backward-kill-word)
@@ -19,6 +19,16 @@
 (global-set-key (kbd "C-S-<right>") 'next-buffer)
 
 (define-key global-map (kbd "RET") 'newline-and-indent)
+
+(defun smart-home ()
+  "Odd home to beginning of line, even home to beginning of text/code."
+  (interactive)
+  (if (and (eq last-command 'smart-home)
+		   (/= (line-beginning-position) (point)))
+	  (beginning-of-line)
+    (beginning-of-line-text)))
+
+(global-set-key [home] 'smart-home)
 
 ; load marmalade
 (require 'package)
@@ -43,26 +53,49 @@ re-downloaded in order to locate PACKAGE."
         (package-refresh-contents)
         (require-package package min-version t)))))
 
-(defvar required-packages '(color-theme
-							zenburn-theme
-							cl-lib
-							smart-tabs-mode))
-							
+(setq required-packages '(color-theme
+						  zenburn-theme
+						  cl-lib
+						  smart-tabs-mode
+						  clojure-mode
+						  ascope
+						  fuzzy-format
+						  git-commit-mode
+						  git-rebase-mode
+						  gitconfig-mode
+						  gitignore-mode
+						  magit))
+
 ; install any missing packages
 (dolist (p required-packages)
   (require-package p))
+
+(require 'ascope)
 
 ; add elisp directories to load path
 (labels ((add-path (p)
 		 (add-to-list 'load-path (concat "~/.emacs.d/" p))))
   (add-path "lisp") ; my elisp code
   (add-path "site-lisp") ; elisp packages not available on marmalade or melpa
+  (add-path "site-lisp/p4.el")
   )
 
-; themes and display settings
 (load-library "fill-column-indicator")
+(require 'p4)
 
-; TODO: should find a way to do this as a mode hook for all code types
+; editing and navigation
+(set-fill-column 80)
+(turn-on-auto-fill)
+
+(setq scroll-step 1)
+
+; make tab less stupid
+(setq tab-width 4)
+(defalias 'c-basic-offset 'tab-width)
+
+(smart-tabs-insinuate 'c)
+
+; themes and display settings
 (define-globalized-minor-mode global-fci-mode fci-mode
   (lambda ()
     (unless (member major-mode not-code-modes-list)
@@ -76,18 +109,6 @@ re-downloaded in order to locate PACKAGE."
 (global-font-lock-mode t)
 
 (load-theme 'zenburn t)
-
-; editing and navigation
-(set-fill-column 80)
-(turn-on-auto-fill)
-
-(setq scroll-step 1)
-
-; make tab less stupid
-(setq tab-width 4)
-(defalias 'c-basic-offset 'tab-width)
-
-(smart-tabs-insinuate 'c)
 
 ; window settings
 (windmove-default-keybindings)
