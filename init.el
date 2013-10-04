@@ -54,17 +54,18 @@ re-downloaded in order to locate PACKAGE."
         (require-package package min-version t)))))
 
 (setq required-packages '(color-theme
-						  zenburn-theme
-						  cl-lib
-						  smart-tabs-mode
-						  clojure-mode
-						  ascope
-						  fuzzy-format
-						  git-commit-mode
-						  git-rebase-mode
-						  gitconfig-mode
-						  gitignore-mode
-						  magit))
+			  zenburn-theme
+			  cl-lib
+			  smart-tabs-mode
+			  clojure-mode
+			  ascope
+			  fuzzy-format
+			  git-commit-mode
+			  git-rebase-mode
+			  gitconfig-mode
+			  gitignore-mode
+			  magit
+			  haskell-mode))
 
 ; install any missing packages
 (dolist (p required-packages)
@@ -94,6 +95,8 @@ re-downloaded in order to locate PACKAGE."
 (defalias 'c-basic-offset 'tab-width)
 
 (smart-tabs-insinuate 'c)
+
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
 ; themes and display settings
 (define-globalized-minor-mode global-fci-mode fci-mode
