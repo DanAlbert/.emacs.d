@@ -1,4 +1,4 @@
-(require 'cl) ; common lisp's labels is pretty great
+(require 'cl) ; for cl-label
 
 ; a list of modes which should not be considered as "code"
 ; used to prevent enabling of 80 column marker, line numbering, etc in modes
@@ -19,6 +19,14 @@
 (global-set-key (kbd "C-S-<right>") 'next-buffer)
 
 (define-key global-map (kbd "RET") 'newline-and-indent)
+
+; make TRAMP work with plink on Windows
+(if (eq system-type "windows-nt")
+  (progn
+    (require 'tramp)
+    (setq tramp-terminal-type "dumb")
+    (set-default 'tramp-auto-save-directory (getenv "TEMP"))
+    (set-default 'tramp-default-method "plink")))
 
 (defun smart-home ()
   "Odd home to beginning of line, even home to beginning of text/code."
