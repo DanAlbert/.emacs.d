@@ -1,3 +1,6 @@
+# make sure local config stays local
+local-config.el
+
 # don't push downloaded packages; they'll be fetched on load
 elpa/
 
