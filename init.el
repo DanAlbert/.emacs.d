@@ -23,8 +23,7 @@
               (add-to-list 'load-path (concat "~/.emacs.d/" p))))
   (add-path "")                         ; allow elisp in the main directory
   (add-path "lisp")                     ; my elisp code
-  (add-path "site-lisp")                ; elisp packages not available on repos
-  (add-path "site-lisp/p4.el"))
+  (add-path "site-lisp"))               ; elisp packages not available on repos
 
 (require 'packages)
 (pkg-require '(color-theme
@@ -39,6 +38,7 @@
                gitconfig-mode
                gitignore-mode
                magit
+               p4
                haskell-mode))
 
 (require 'keybindings)
@@ -55,6 +55,19 @@
 
 ; make tab less stupid
 (setq-default tab-width 4)
+
+; Align with spaces only
+(defadvice align (around align-with-spaces)
+  "Never use tabs for alignment."
+  (let ((indent-tabs-mode nil))
+    ad-do-it))
+(ad-activate 'align)
+
+(defadvice align-regexp (around align-regexp-with-spaces)
+  "Never use tabs for alignment."
+  (let ((indent-tabs-mode nil))
+    ad-do-it))
+(ad-activate 'align-regexp)
 
 ; themes and display settings
 (define-globalized-minor-mode global-fci-mode fci-mode
