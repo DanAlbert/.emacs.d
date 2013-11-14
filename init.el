@@ -17,6 +17,8 @@
                             gnus-summary-mode
                             gnus-article-mode))
 
+(setq emacs-home "~/.emacs.d/")
+
 ; add elisp directories to load path
 ; TODO: go look up the way to do this recursively to avoid site-lisp/foo
 (cl-labels ((add-path (p)
@@ -124,4 +126,5 @@
 (require-dir "~/.emacs.d/modes")
 
 ; include local configuration last so it may override the above settings
-(require 'local-config)
+(when (file-regular-p (concat emacs-home "local-config.el"))
+  (require 'local-config))
