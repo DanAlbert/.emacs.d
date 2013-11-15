@@ -79,9 +79,10 @@
 (global-fci-mode t)
 
 (setq fci-rule-width 4)
+(setq fci-rule-character ?\u2502)
 
 ; default character color won't display with zenburn in text mode
-(setq fci-rule-character-color "white")
+(setq fci-rule-character-color "gray18")
 
 ; editing and navigation
 (setq-default fill-column 80)
@@ -98,6 +99,9 @@
 
 ; window settings
 (windmove-default-keybindings 'meta)
+
+(unless (display-graphic-p)
+  (setq linum-format "%5d\u2502"))
 
 (defadvice linum-on (around linum-on-inhibit-for-modes)
   "Stop the load of linum-mode for some major modes."
