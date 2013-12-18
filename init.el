@@ -11,6 +11,8 @@
                             eshell-mode
                             shell-mode
                             erc-mode
+                            compilation-mode
+                            gud-mode
                             jabber-roster-mode
                             jabber-chat-mode
                             gnus-group-mode
@@ -20,7 +22,6 @@
 (setq emacs-home "~/.emacs.d/")
 
 ; add elisp directories to load path
-; TODO: go look up the way to do this recursively to avoid site-lisp/foo
 (cl-labels ((add-path (p)
               (add-to-list 'load-path (concat "~/.emacs.d/" p))))
   (add-path "")                         ; allow elisp in the main directory
@@ -94,6 +95,15 @@
 (show-paren-mode t)
 (setq show-paren-delay 0)
 (global-font-lock-mode t)
+
+;; Reverse colors for the border to have nicer line  
+(set-face-inverse-video-p 'vertical-border nil)
+(set-face-background 'vertical-border (face-background 'default))
+
+;; Set symbol for the border
+(set-display-table-slot standard-display-table
+                        'vertical-border 
+                        (make-glyph-code ?\u2502))
 
 (load-theme 'zenburn t)
 

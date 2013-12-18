@@ -27,6 +27,8 @@
       (beginning-of-line)
     (beginning-of-line-text)))
 
+(require 'build)
+
 (global-set-key "\C-w" 'my-backward-kill-word)
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-x\C-k" 'kill-region)
@@ -34,7 +36,9 @@
 (global-set-key (kbd "C-S-<left>") 'previous-buffer)
 (global-set-key (kbd "C-S-<right>") 'next-buffer)
 (global-set-key [f2] 'toggle-window-dedicated)
-(global-set-key [f7] 'recompile)
+(global-set-key [f7] 'make)
+(global-set-key [S-f7] 'make-serial)
+(global-set-key [f8] 'make-clean)
 (global-set-key [home] 'smart-home)
 
 (define-key global-map (kbd "RET") 'newline-and-indent)
