@@ -27,12 +27,17 @@
       (beginning-of-line)
     (beginning-of-line-text)))
 
+(defun yank-pop-forwards (arg)
+      (interactive "p")
+      (yank-pop (- arg)))
+
 (require 'build)
 
 (global-set-key "\C-w" 'my-backward-kill-word)
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-x\C-b" 'ibuffer)
+(global-set-key "\M-Y" 'yank-pop-forwards)
 (global-set-key (kbd "C-S-<left>") 'previous-buffer)
 (global-set-key (kbd "C-S-<right>") 'next-buffer)
 (global-set-key [f2] 'toggle-window-dedicated)
@@ -40,6 +45,7 @@
 (global-set-key [S-f7] 'make-serial)
 (global-set-key [f8] 'make-clean)
 (global-set-key [home] 'smart-home)
+(global-unset-key [insert])
 
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
