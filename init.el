@@ -21,12 +21,23 @@
 
 (setq emacs-home "~/.emacs.d/")
 
+(defun add-plugin-dir (dir)
+  (interactive "Directory: ")
+  (add-to-list 'load-path dir)
+  (dolist (file (directory-files dir t))
+    (when (and (file-directory-p file)
+               (not (string= "." (file-name-nondirectory file)))
+               (not (string= ".." (file-name-nondirectory file))))
+      (add-to-list 'load-path file))))
+
 ; add elisp directories to load path
 (cl-labels ((add-path (p)
-              (add-to-list 'load-path (concat "~/.emacs.d/" p))))
+              (add-to-list 'load-path (concat "~/.emacs.d/" p)))
+            (add-path-subdirs (p)
+              (add-plugin-dir (concat "~/.emacs.d/" p))))
   (add-path "")                         ; allow elisp in the main directory
   (add-path "lisp")                     ; my elisp code
-  (add-path "site-lisp"))               ; elisp packages not available on repos
+  (add-path-subdirs "site-lisp"))       ; elisp packages not available on repos
 
 (require 'packages)
 (pkg-require '(color-theme

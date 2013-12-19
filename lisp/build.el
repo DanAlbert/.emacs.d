@@ -1,5 +1,7 @@
+(require 'system-cores)
+
 (setq make-command "make")
-(setq num-compile-threads 5)
+(setq num-compile-threads (1+ (system-cores :logical)))
 
 (defun make-dir-option (dir)
   (concat "-C " dir))
