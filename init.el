@@ -107,6 +107,8 @@
 (setq show-paren-delay 0)
 (global-font-lock-mode t)
 
+(load-theme 'zenburn t)
+
 ;; Reverse colors for the border to have nicer line  
 (set-face-inverse-video-p 'vertical-border nil)
 (set-face-background 'vertical-border (face-background 'default))
@@ -115,8 +117,6 @@
 (set-display-table-slot standard-display-table
                         'vertical-border 
                         (make-glyph-code ?\u2502))
-
-(load-theme 'zenburn t)
 
 ; window settings
 (windmove-default-keybindings 'meta)
