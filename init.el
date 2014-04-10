@@ -43,6 +43,7 @@
 (pkg-require '(color-theme
                zenburn-theme
                cl-lib
+               framemove
                smart-tabs-mode
                clojure-mode
                ascope
@@ -58,7 +59,10 @@
 (require 'keybindings)
 (require 'ascope)
 (require 'p4)
+(require 'android-compile)
+(require 'android-host)
 
+(add-hook 'c++-mode-hook 'android-compile)
 (load-library "fill-column-indicator")
 
 (defun require-dir (dir)
@@ -119,7 +123,9 @@
                         (make-glyph-code ?\u2502))
 
 ; window settings
+(require 'framemove)
 (windmove-default-keybindings 'meta)
+(setq framemove-hook-into-windmove t)
 
 (unless (display-graphic-p)
   (setq linum-format "%5d\u2502"))
